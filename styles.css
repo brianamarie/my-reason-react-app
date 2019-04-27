@@ -1,0 +1,114 @@
+html {
+    font-size: 10px;
+}
+
+body, input, button {
+    font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+    font-size: 1.8rem; 
+}
+
+body {
+    margin: 0;
+}
+
+form {
+    margin: 0;
+    position: relative;
+}
+
+form input {
+    background: transparent;
+    border: 0;
+    border-bottom: 0.1rem dashed black;
+    font-weight: 500;
+    line-height: 5.2rem;
+    padding-bottom: 0.1rem;
+    padding-right: 2rem;
+    padding-top: 0.6rem;
+    width: 100%;
+}
+
+form input:focus {
+    border-bottom: 0.1rem solid black;
+    outline: none;
+}
+
+form button {
+    background: url(assets/add.svg) center center;
+    border: 0.1rem solid transparent;
+    cursor: pointer;
+    height: 4rem;
+    position: absolute;
+    right: -1.2rem;
+    top: 1rem;
+    width: 4rem;
+}
+
+form button:focus {
+    border: 0.1rem solid black;
+    border-radius: 2rem;
+    outline: none;
+}
+
+ul {
+    margin: 0;
+    padding: 3rem 0;
+}
+
+ul li {
+    line-height: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 1.4rem 0 0.6rem 4rem;
+    position: relative;
+}
+
+ul li button {
+    background: url(assets/done.svg) center center;
+    border: 0.1rem solid transparent;
+    cursor: pointer;
+    height: 4rem;
+    left: -0.8rem;
+    position: absolute;
+    top: 0.2rem;
+    width: 4rem;
+}
+
+ul li button:focus {
+    border: 0.1rem solid black;
+    border-radius: 2rem;
+    outline: none;
+}
+
+ul li.pending span {
+    font-weight: 500;
+}
+
+ul li.done button {
+    display: none;
+}
+
+ul li.done span {
+    color: rgba(0,0,0,0.5);
+    text-decoration: line-through;
+}
+
+@media screen and (max-width: 600px) {
+    main {
+        padding: 0 2.0rem;
+    }
+} 
+
+@media screen and (min-width: 601px) {
+    main {
+        padding: 0;
+        width: 50rem;
+        margin: 0 auto;
+    }
+} 
+
+@media screen and (min-width: 1201px) {
+    html {
+        font-size: 15px;
+    }
+} 
