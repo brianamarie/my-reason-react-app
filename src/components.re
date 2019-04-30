@@ -6,8 +6,11 @@
   */
 module Task = {
   [@react.component]
-  let make = (~task as _, ~onDone as _) => {
-    <li> <button title="done" /> </li>;
+  let make = (~task, ~onDone as _) => {
+    <li>
+      <button title="done" />
+      <span> Model.Task.(task.label |> React.string) </span>
+    </li>;
   };
 };
 
