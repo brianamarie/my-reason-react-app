@@ -54,17 +54,45 @@ module State = {
   };
 
   /** The initial state of the application */
-  let initial_state = {
-    input: None,
-    tasks: [Task.make("Learn Reason"), Task.make("Have fun!")],
-  };
+  let initial_state = {input: None, tasks: [Task.make("Learn Reason")]};
 
   /** Our reducer works very similarly to other reducers you may have seen
       before. If receives the current state, and an action, and will compute
       a new state for the application to continue with. */
-  let reducer = (state, _action) => {
+  let reducer = (state, action) => {
+    let new_state =
+      switch (action) {
+      /* If the action Write has no text at all, we clear up the input */
+      | Action.Write("") => {...state, input: None}
+
+      /* If the action Write has text we save it in the state */
+      | Action.Write(text) => {...state, input: Some(text)}
+
+      | Action.Add_task =>
+        switch (state.input) {
+        /* If we have no input in the state, we can't add a task! */
+        | None => state
+
+        /* But if we have some input, we can use it as a label */
+        | Some(label) => {
+            input: None,
+            tasks: [Task.make(label), ...state.tasks],
+          }
+        }
+
+      | Action.Complete_task(id) =>
+        let new_tasks =
+          state.tasks
+          |> List.map(task =>
+               switch (id == task.Task.id) {
+               | true => {...task, status: Done}
+               | _ => task
+               }
+             );
+        {...state, tasks: new_tasks};
+      };
     /* We log the state for convenience when developing */
-    Js.log(state);
-    state;
+    Js.log(new_state);
+    new_state;
   };
 };

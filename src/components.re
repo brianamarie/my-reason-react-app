@@ -6,10 +6,16 @@
   */
 module Task = {
   [@react.component]
-  let make = (~task, ~onDone as _) => {
-    <li>
-      <button title="done" />
-      <span> Model.Task.(task.label |> React.string) </span>
+  let make = (~task, ~onDone) => {
+    <li
+      className=Model.Task.(
+        switch (task.status) {
+        | Pending => "pending"
+        | Done => "done"
+        }
+      )>
+      <button title="done" onClick={_ => onDone(Model.Task.(task.id))} />
+      <span> Model.Task.(React.string(task.label)) </span>
     </li>;
   };
 };
@@ -20,12 +26,46 @@ module ToDo = {
         events. */
   [@react.component]
   let make = () => {
+    let (state, dispatch) =
+      Model.State.(React.useReducer(reducer, initial_state));
+
     <div>
-      <form>
-        <input placeholder="What do you need to do?" />
+      <form
+        onSubmit={e => {
+          ReactEvent.Form.preventDefault(e);
+          dispatch(Add_task);
+        }}>
+        <input
+          placeholder="What do you need to do?"
+          value=Model.State.(
+            switch (state.input) {
+            | None => ""
+            | Some(str) => str
+            }
+          )
+          onChange={e => {
+            let text = ReactEvent.Form.target(e)##value;
+            Model.Action.Write(text) |> dispatch;
+          }}
+        />
         <button type_="submit" title="add" />
       </form>
-      <ul />
+      <ul>
+        Model.State.(
+          state.tasks
+          |> List.map(task =>
+               <Task
+                 key=Model.Task.(task.id)
+                 task
+                 onDone={task_id =>
+                   Model.Action.Complete_task(task_id) |> dispatch
+                 }
+               />
+             )
+          |> Array.of_list
+          |> React.array
+        )
+      </ul>
     </div>;
   };
 };
