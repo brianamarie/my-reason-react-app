@@ -1,0 +1,27 @@
+{
+  "name": "todo-app",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "bsb -make-world && fpack build ./lib/js/src/index.bs.js --development",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "test": "bsb -make-world && jest",
+    "refmt": "bsrefmt --in-place src/*"
+  },
+  "keywords": [
+    "BuckleScript",
+    "Reason",
+    "ReasonReact",
+    "Github Learning Lab",
+    "Learn You Some Reason"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^5.0.0",
+    "fastpack": "^0.8.4",
+    "@glennsl/bs-jest": "^0.4.8"
+  },
+  "dependencies": {
+    "reason-react": "^0.7.0"
+  }
+}
